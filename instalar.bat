@@ -6,3 +6,4 @@ set pasta=%cd%
 set pasta=%pasta:\=/%
 
 echo (add-to-list 'load-path "%pasta%") (load "criarprojeto") > %HOME%\.emacs
+
