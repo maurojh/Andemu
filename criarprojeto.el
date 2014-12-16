@@ -11,10 +11,17 @@ as input."
 ;   (print projeto)
    (read-shell-command "Shell command on buffer: ")))
 
-(defun construir ()
-  (cd (format "C:/%s" projeto))
+(defun instalar ()
   (interactive)
-  (shell-command-on-region (point-min) (point-max) "ant debug"))
+  (progn
+    (cd (format "C:/%s" projeto))
+    (shell-command (format "adb install bin/%s-debug.apk" projeto))))
+
+(defun construir ()
+  (interactive)
+  (progn
+    (cd (format "C:/%s" projeto))
+    (shell-command "ant debug")))
 
 (defun criar (nome target)
   "Asks for a command and executes it in inferior shell with current buffer
@@ -48,8 +55,13 @@ as input."
 ;; creating another menu item
 (define-key
   global-map
+  [menu-bar pcp2 instalar]
+  '("Instalar App" . instalar))
+
+(define-key
+  global-map
   [menu-bar pcp2 construir]
-  '("Construir" . shell-command-on-buffer))
+  '("Construir App" . construir))
 
 (define-key
   global-map
